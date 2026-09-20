@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pair-wise EDA 网表比较</title>
+  <style>
+    :root { color-scheme: light; --bg:#f6f7fb; --card:#fff; --line:#d8dde8; --ink:#172033; --muted:#667085; --blue:#2563eb; --red:#dc2626; --green:#15803d; --amber:#b45309; }
+    body { margin:0; font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
+    header { padding:22px 28px; background:#111827; color:#fff; }
+    header h1 { margin:0 0 4px; font-size:22px; }
+    header p { margin:0; color:#cbd5e1; }
+    main { display:grid; grid-template-columns:390px 1fr; gap:18px; padding:18px 24px; }
+    section, .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+    h2 { font-size:16px; margin:0 0 12px; }
+    h3 { font-size:14px; margin:14px 0 8px; }
+    label { display:block; font-weight:600; margin:10px 0 5px; }
+    input, textarea, select { box-sizing:border-box; width:100%; border:1px solid var(--line); border-radius:8px; padding:8px; font:inherit; background:#fff; }
+    textarea { min-height:120px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; }
+    button { border:0; border-radius:8px; padding:8px 11px; margin:6px 4px 0 0; background:var(--blue); color:white; cursor:pointer; }
+    button.secondary { background:#475569; }
+    button.danger { background:var(--red); }
+    button.good { background:var(--green); }
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th,td { border-bottom:1px solid var(--line); padding:7px; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    pre { white-space:pre-wrap; word-break:break-all; background:#0f172a; color:#e2e8f0; padding:10px; border-radius:8px; max-height:280px; overflow:auto; }
+    .badge { display:inline-block; border-radius:999px; padding:3px 9px; font-size:12px; font-weight:700; }
+    .ok { background:#dcfce7; color:var(--green); }
+    .bad { background:#fee2e2; color:var(--red); }
+    .warn { background:#fef3c7; color:var(--amber); }
+    .info { background:#dbeafe; color:#1d4ed8; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .muted { color:var(--muted); }
+    details { border:1px solid var(--line); border-radius:8px; padding:9px; margin-top:8px; }
+    summary { cursor:pointer; font-weight:700; }
+  </style>
+</head>
+<body>
+  <header><h1>Pair-wise EDA 网表比较</h1><p>本地持久化 · 规则版本绑定 · 可验证映射证书 · 原子批量结果</p></header>
+  <main>
+    <div>
+      <section>
+        <h2>1. 导入规则和网表</h2>
+        <label>规则集 JSON</label>
+        <textarea id="rules"></textarea>
+        <button onclick="saveRules()">保存规则</button>
+        <button class="secondary" onclick="loadSamples()">填入示例</button>
+        <div class="grid2">
+          <div><label>网表 A</label><textarea id="leftNet"></textarea></div>
+          <div><label>网表 B</label><textarea id="rightNet"></textarea></div>
+        </div>
+        <button onclick="saveNetlists()">分别保存并比较</button>
+        <button class="secondary" onclick="refresh()">刷新</button>
+      </section>
+      <section>
+        <h2>2. 会话与批量</h2>
+        <label>会话</label><select id="sessions" size="8"></select>
+        <button onclick="retry()">重试搜索</button>
+        <h3>原子批量提交</h3>
+        <textarea id="batch"></textarea>
+        <button onclick="submitBatch()">提交批量</button>
+      </section>
+    </div>
+    <div id="content" class="muted">加载中……</div>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

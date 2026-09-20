@@ -34,3 +34,10 @@ coverage/
 .vite/
 .turbo/
 *.tsbuildinfo
+
+# .NET build output and local application state
+bin/
+obj/
+.netcompare/
+*.user
+artifacts/
