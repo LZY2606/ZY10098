@@ -34,3 +34,14 @@ coverage/
 .vite/
 .turbo/
 *.tsbuildinfo
+
+# --- .NET ---
+bin/
+obj/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+src/Web/data/
+TestResults/
+*.trx
+coveragejson/

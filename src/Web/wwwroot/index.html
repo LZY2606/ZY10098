@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pair-wise GSB 网表等价比较</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Pair-wise GSB</h1>
+      <p>本地网表连接语义比较系统</p>
+    </div>
+    <span id="health">检查服务中…</span>
+  </header>
+  <main>
+    <section class="card">
+      <h2>1. 导入输入</h2>
+      <div class="grid two">
+        <label>名称<input id="netlistName" placeholder="filter-v1"></label>
+        <label>规则版本（可空）<input id="ruleVersion" placeholder="默认规则"></label>
+      </div>
+      <label>网表 JSON<textarea id="netlistText" rows="10"></textarea></label>
+      <button id="importNetlist">导入网表</button>
+      <label>规则 JSON（可空，使用默认规则）<textarea id="rulesText" rows="8"></textarea></label>
+      <button id="importRules">导入规则</button>
+      <div id="importResult" class="muted"></div>
+    </section>
+
+    <section class="card">
+      <h2>2. 比较会话</h2>
+      <label>会话名称<input id="sessionName" placeholder="filter A vs B"></label>
+      <div class="grid two">
+        <select id="leftNetlist"></select>
+        <select id="rightNetlist"></select>
+      </div>
+      <select id="rulesSelect"></select>
+      <label>搜索预算（毫秒）<input id="timeoutMs" type="number" value="500"></label>
+      <button id="createSession">创建并搜索</button>
+      <button id="refreshSession">重新搜索</button>
+      <div id="sessionHeadline" class="headline"></div>
+      <div id="diagnostics"></div>
+    </section>
+
+    <section class="card">
+      <h2>3. 映射与决定</h2>
+      <div class="grid two">
+        <div><h3>已匹配组件</h3><div id="matches"></div></div>
+        <div><h3>候选歧义 / 旧决定建议</h3><div id="ambiguities"></div></div>
+      </div>
+      <h3>手动锁定或否决</h3>
+      <div class="grid three">
+        <input id="manualLeft" placeholder="左侧组件 ID">
+        <input id="manualRight" placeholder="右侧组件 ID">
+        <span><button id="lockPair">锁定</button><button class="secondary" id="vetoPair">否决</button></span>
+      </div>
+      <div id="decisions"></div>
+    </section>
+
+    <section class="card">
+      <h2>4. 证据</h2>
+      <button id="loadCertificate">查看证书</button>
+      <pre id="certificate"></pre>
+      <h3>最小区分子图</h3>
+      <div id="witness"></div>
+      <h3>输入、规则与事件顺序</h3>
+      <details><summary>左侧原文与指纹</summary><pre id="leftRaw"></pre></details>
+      <details><summary>右侧原文与指纹</summary><pre id="rightRaw"></pre></details>
+      <details><summary>规则版本与事件</summary><pre id="rulesRaw"></pre></details>
+      <div id="events"></div>
+    </section>
+
+    <section class="card">
+      <h2>5. 批量比较</h2>
+      <label>幂等标识（可空）<input id="batchKey" placeholder="stable-batch-key"></label>
+      <textarea id="batchPairs" rows="8" placeholder='[{"name":"pair-1","leftNetlistId":"...","rightNetlistId":"..."}]'></textarea>
+      <button id="submitBatch">提交批量</button>
+      <button id="refreshBatch">刷新批量状态</button>
+      <div id="batchResult"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
